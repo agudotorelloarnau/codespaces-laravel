@@ -5,14 +5,20 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\Api\SeriesController;
 use App\Http\Controllers\Api\MovieController;
+use App\Http\Controllers\AuthController;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+// Route::get('/user', function (Request $request) {
+//     return $request->user();
+// })->middleware('auth:sanctum');
 
-Route::get('/students', [StudentController::class, 'index']);
+// Route::get('/students', [StudentController::class, 'index']);
 
-Route::get('/students/{id}', [StudentController::class, 'estudiante2']);
+// Route::get('/students/{id}', [StudentController::class, 'estudiante2']);
+
+Route::post('/register', [AuthController::class, 'register']);
+
+Route::post('/login', [AuthController::class, 'login']);
+
 
 Route::get('/series', [SeriesController::class, 'index']);
 Route::get('/series/{id}', [SeriesController::class, 'show']);
