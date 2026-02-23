@@ -11,4 +11,9 @@ class StudentController extends Controller
         $students = Student::all();
         return response()->json(['students' => $students], 200);
     }
+
+    public function estudiante2($id){
+        $student2 = Student::find($id);
+        return response()->json(['student' => $student2], 200);
+    }
 }
