@@ -11,4 +11,8 @@ class Student extends Model
 
     protected $table = 'students';
     protected $fillable = ['name', 'surname', 'email', 'age', 'created_at'];
+
+    public function notes(){
+        return $this->hasMany(Note::class);
+    }
 }
