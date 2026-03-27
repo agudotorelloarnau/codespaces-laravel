@@ -40,4 +40,10 @@ class Product extends Model
             'created_at' => 'datetime',
         ];
     }
+
+    public function category(): belongTo
+    {
+        return $this->belongsTo(Category::class);
+    }
+   
 }
