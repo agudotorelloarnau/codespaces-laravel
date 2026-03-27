@@ -34,15 +34,13 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * The attributes that should be cast.
      *
-     * @return array<string, string>
+     * @var array<string, string>
      */
-    protected function casts(): array
-    {
-        return [
-            'password' => 'hashed',
-            'created_at' => 'datetime',
-        ];
-    }
+    protected $casts = [
+        'password' => 'hashed',
+        'created_at' => 'datetime',
+    ];
 }
+

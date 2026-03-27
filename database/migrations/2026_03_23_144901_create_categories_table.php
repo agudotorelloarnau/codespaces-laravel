@@ -12,10 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('categories', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->id();
             $table->string('name');
             $table->text('description');
-            $table->timestamp('created_at')->useCurrent();
+            $table->timestamps();
         });
     }
 
