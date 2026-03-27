@@ -15,7 +15,7 @@ class IsUserAuth
     public function handle(Request $request, Closure $next)
 {
     if (! $user = auth('api')->user()) {
-        return response()->json(['message' => 'Unauthorized Invalid Token'], 401);
+        return response()->json(['message' => 'No autorizado: token inválido'], 401);
     }
 
     $request->setUserResolver(fn () => $user);

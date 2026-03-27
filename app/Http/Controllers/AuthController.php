@@ -27,7 +27,7 @@ class AuthController extends Controller
         $token = JWTAuth::fromUser($user);
 
         return response()->json([
-            'message' => 'User registered',
+            'message' => 'Usuario registrado',
             'user' => $user,
             'token' => $token,
         ], 201);
@@ -44,13 +44,13 @@ class AuthController extends Controller
 
         try {
             if (! $token = JWTAuth::attempt($credentials)) {
-                return response()->json(['message' => 'Invalid credentials'], 401);
+                return response()->json(['message' => 'Credenciales inválidas'], 401);
             }
         } catch (JWTException $e) {
-            return response()->json(['message' => 'Could not create token'], 500);
+            return response()->json(['message' => 'No se pudo generar el token'], 500);
         }
 
-        return response()->json(['message' => 'Logged in successfully', 'token' => $token], 200);
+        return response()->json(['message' => 'Inicio de sesión correcto', 'token' => $token], 200);
     }
 
     public function me(Request $request)
@@ -62,9 +62,9 @@ class AuthController extends Controller
     {
         try {
             JWTAuth::invalidate(JWTAuth::getToken());
-            return response()->json(['message' => 'Logged out successfully'], 200);
+            return response()->json(['message' => 'Sesión cerrada correctamente'], 200);
         } catch (JWTException $e) {
-            return response()->json(['message' => 'Failed to logout, please try again.'], 500);
+            return response()->json(['message' => 'No se pudo cerrar sesión, inténtalo de nuevo'], 500);
         }
     }
 }

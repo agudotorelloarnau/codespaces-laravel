@@ -19,7 +19,7 @@ class CategoryController extends Controller
         $category = Category::with('products')->find($id);
 
         if (! $category) {
-            return response()->json(['message' => 'Category not found'], 404);
+            return response()->json(['message' => 'Categoría no encontrada'], 404);
         }
 
         return response()->json(['category' => $category], 200);
@@ -42,7 +42,7 @@ class CategoryController extends Controller
         $category = Category::find($id);
 
         if (! $category) {
-            return response()->json(['message' => 'Category not found'], 404);
+            return response()->json(['message' => 'Categoría no encontrada'], 404);
         }
 
         $validated = $request->validate([
@@ -60,12 +60,12 @@ class CategoryController extends Controller
         $category = Category::find($id);
 
         if (! $category) {
-            return response()->json(['message' => 'Category not found'], 404);
+            return response()->json(['message' => 'Categoría no encontrada'], 404);
         }
 
         $category->products()->update(['category_id' => null]);
         $category->delete();
 
-        return response()->json(['message' => 'Category deleted'], 200);
+        return response()->json(['message' => 'Categoría eliminada'], 200);
     }
 }
