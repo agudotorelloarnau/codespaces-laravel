@@ -2,33 +2,29 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\User;
-use App\Services\JwtService;
 use Closure;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
 
 class IsUserAuth
 {
     public function handle(Request $request, Closure $next)
     {
-        $authorization = $request->header('Authorization');
+        try {
+            $user = JWTAuth::parseToken()->authenticate();
 
-        if (! $authorization || ! str_starts_with($authorization, 'Bearer ')) {
-            return response()->json(['message' => 'Token missing'], 401);
-        }
-
-        $token = trim(str_replace('Bearer', '', $authorization));
-        $jwtService = new JwtService();
-        $payload = $jwtService->decode($token);
-
-        if (! $payload || empty($payload->sub)) {
-            return response()->json(['message' => 'Invalid token'], 401);
-        }
-
-        $user = User::find($payload->sub);
-
-        if (! $user) {
-            return response()->json(['message' => 'User not found'], 401);
+            if (! $user) {
+                return response()->json(['message' => 'User not found'], 401);
+            }
+        } catch (JWTException $exception) {
+            if ($exception instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException) {
+                return response()->json(['message' => 'Token invalid'], 401);
+            } elseif ($exception instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException) {
+                return response()->json(['message' => 'Token expired'], 401);
+            } else {
+                return response()->json(['message' => 'Token not provided'], 401);
+            }
         }
 
         $request->setUserResolver(fn () => $user);
